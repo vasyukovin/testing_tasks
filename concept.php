@@ -1,9 +1,49 @@
 <?php
+
+interface StorageInterface
+{
+    public function getSecretKey();
+}
+
+class FileStorage implements StorageInterface
+{
+    public function getSecretKey()
+    {
+        // Implements getSecretKey() method.
+    }
+}
+
+class DBStorage implements StorageInterface
+{
+    public function getSecretKey()
+    {
+        // Implements getSecretKey() method.
+    }
+}
+
+class RedisStorage implements StorageInterface
+{
+    public function getSecretKey()
+    {
+        // Implements getSecretKey() method.
+    }
+}
+
+class CloudStorage implements StorageInterface
+{
+    public function getSecretKey()
+    {
+        // Implements getSecretKey() method.
+    }
+}
+
 class Concept {
     private $client;
+    private StorageInterface $storage;
 
-    public function __construct() {
+    public function __construct(StorageInterface $storage) {
         $this->client = new \GuzzleHttp\Client();
+        $this->storage = $storage;
     }
 
     public function getUserData() {
@@ -18,5 +58,10 @@ class Concept {
         });
 
         $promise->wait();
+    }
+
+    private function getSecretKey()
+    {
+        return $this->storage->getSecretKey();
     }
 }
